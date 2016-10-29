@@ -12,9 +12,12 @@
   },
   "dependencies": {
     "axios": "^0.15.2",
+    "localStorage": "^1.0.3",
     "react": "^15.3.2",
     "react-bootstrap": "^0.30.5",
-    "react-dom": "^15.3.2"
+    "react-dom": "^15.3.2",
+    "react-localstorage": "^0.3.0",
+    "react-redux": "^4.4.5"
   },
   "scripts": {
     "start": "react-scripts start",

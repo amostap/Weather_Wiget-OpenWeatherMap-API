@@ -1,11 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import axios from 'axios';
 import { Col } from 'react-bootstrap';
-
-const CARDSTYLES = {
-  border: '1px solid black',
-  borderRadius: '5px',
-};
 
 class Card extends Component {
   constructor(props) {
@@ -23,9 +18,8 @@ class Card extends Component {
   }
 
   componentDidMount() {
-    axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${this.state.cityName}&APPID=${this.state.ID}`)
+    axios.get(`https://crossorigin.me/http://api.openweathermap.org/data/2.5/weather?q=${this.state.cityName}&APPID=${this.state.ID}`)
       .then((response) => {
-        console.log(response.data)
         this.setState({
           temp: Math.floor(response.data.main.temp - 273.15),
           humidity: response.data.main.humidity,
@@ -42,9 +36,12 @@ class Card extends Component {
 
   render() {
     return (this.state.loading ?
-      <h3>loading...</h3> :
-        <Col style={CARDSTYLES} lg={4} md={4} sm={4} xs={6}>
-          <h3>{this.state.data.name}</h3>
+      <Col lg={3} md={3} sm={4} xs={6}>
+        <h3>{this.props.cityName}</h3>
+        <h3>loading...</h3>
+      </Col> :
+        <Col lg={3} md={3} sm={4} xs={6}>
+          <h3>{this.props.cityName}</h3>
           <p>Current temp: {this.state.temp}°C</p>
           <p>Humidity: {this.state.humidity}%</p>
           <p>Pressure: {this.state.pressure} hpa</p>
@@ -54,5 +51,9 @@ class Card extends Component {
     );
   }
 }
+
+Card.propTypes = {
+  cityName: PropTypes.string.isRequired,
+};
 
 export default Card;
