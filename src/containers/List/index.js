@@ -7,8 +7,8 @@ class List extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      cities: this.props.cities.cityList,
-      city: '',
+      cities: this.props.cities,
+      newCity: '',
       activeKey: JSON.parse(localStorage.getItem('activeKey')).activeKey,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -18,7 +18,6 @@ class List extends Component {
 
   onSelect(e) {
     let selected = e.id.split('-');
-
     let json = {
       activeKey: +selected[selected.length - 1],
     };
@@ -31,11 +30,18 @@ class List extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    let cities1 = this.state.cities;
+    cities1.push(this.state.newCity);
+    localStorage.setItem('cities', cities1.join());
+    this.setState({
+      cities: cities1,
+    });
+    this.render();
   }
 
   addCity(event) {
     this.setState({
-      city: event.target.value,
+      newCity: event.target.value,
     });
   }
 
@@ -48,7 +54,7 @@ class List extends Component {
               <FormControl
                 type="text"
                 placeholder="City"
-                value={this.state.city}
+                value={this.state.newCity}
                 onChange={this.addCity}
               />
             </FormGroup>
@@ -61,8 +67,8 @@ class List extends Component {
           <Tabs defaultActiveKey={this.state.activeKey} animation id="tab">
             {
               this.state.cities.map((el, key) =>
-                <Tab eventKey={key} key={key} title={el.name} onEntered={this.onSelect}>
-                  <Card key={key} cityName={el.name} />
+                <Tab eventKey={key} key={key} title={el} onEntered={this.onSelect}>
+                  <Card key={key} cityName={el} />
                 </Tab>
               )
             }
@@ -74,7 +80,7 @@ class List extends Component {
 }
 
 List.propTypes = {
-  cities: React.PropTypes.object.isRequired,
+  cities: React.PropTypes.array.isRequired,
 };
 
 export default List;

@@ -38,10 +38,10 @@ class Card extends Component {
     return (this.state.loading ?
       <Col lg={3} md={3} sm={4} xs={6}>
         <h3>{this.props.cityName}</h3>
-        <h3>loading...</h3>
+        <h3>searching and loading...</h3>
       </Col> :
         <Col lg={3} md={3} sm={4} xs={6}>
-          <h3>{this.props.cityName}</h3>
+          <h3>{this.state.data.name}</h3>
           <p>Current temp: {this.state.temp}°C</p>
           <p>Humidity: {this.state.humidity}%</p>
           <p>Pressure: {this.state.pressure} hpa</p>
