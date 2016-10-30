@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { Row, FormGroup, FormControl, Button, Tabs, Tab, Form } from 'react-bootstrap';
+import { Row, FormGroup, FormControl, Button, Tabs, Tab, Form, Col, InputGroup } from 'react-bootstrap';
 import localStorage from 'localStorage';
 import Card from '../../containers/Card';
+import TabTitle from '../../components/TabTitle';
+
 
 class List extends Component {
   constructor(props) {
@@ -34,6 +36,7 @@ class List extends Component {
     this.setState({
       cities,
       newCity: '',
+      activeKey: this.state.cities.length - 1,
     });
   }
 
@@ -53,28 +56,37 @@ class List extends Component {
   render() {
     return (
       <Row>
-        <Form onSubmit={this.handleSubmit} inline>
-          <FormGroup>
-            <FormControl
-              type="text"
-              placeholder="Add new city"
-              value={this.state.newCity}
-              onChange={this.addCity}
-            />
-            <Button type="submit">
-              Submit
-            </Button>
-          </FormGroup>
-        </Form>
-        <Tabs activeKey={+this.state.activeKey} onSelect={this.handleSelect} id="tab">
-          {
-            this.state.cities.map((el, key) =>
-              <Tab eventKey={key} key={key} title={el}>
-                <Card cityName={el} key={el} onDel={this.handleDelete} />
-              </Tab>
-            )
-          }
-        </Tabs>
+        <Col style={{ margin: '20px 0' }}>
+          <Form onSubmit={this.handleSubmit} inline>
+            <FormGroup>
+              <InputGroup>
+                <FormControl
+                  type="text"
+                  placeholder="Add new city"
+                  value={this.state.newCity}
+                  onChange={this.addCity}
+                />
+                <InputGroup.Button>
+                  <Button type="submit">Submit</Button>
+                </InputGroup.Button>
+              </InputGroup>
+            </FormGroup>
+          </Form>
+        </Col>
+        <Col>
+          <Tabs activeKey={+this.state.activeKey} onSelect={this.handleSelect} id="tab">
+            {
+              this.state.cities.map((el, key) =>
+                <Tab
+                  eventKey={key}
+                  key={key} title={<TabTitle elName={el} onDel={this.handleDelete} />}
+                >
+                  <Card cityName={el} key={el} onDel={this.handleDelete} />
+                </Tab>
+              )
+            }
+          </Tabs>
+        </Col>
       </Row>
     );
   }

@@ -3,7 +3,7 @@ import { Grid } from 'react-bootstrap';
 import localStorage from 'localStorage';
 import List from '../List';
 
-const arr = ['London', 'Kharkiv', 'Kiev'];
+const arr = ['New York', 'Kiev', 'Kharkiv'];
 
 function initLC(array) {
   localStorage.setItem('cities', array.join());

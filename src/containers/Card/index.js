@@ -15,8 +15,9 @@ class Card extends Component {
   }
 
   componentDidMount() {
-    axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${this.props.cityName}&APPID=${this.state.ID}`)
+    axios.get(`https://crossorigin.me/http://api.openweathermap.org/data/2.5/weather?q=${this.props.cityName}&APPID=${this.state.ID}`)
       .then((response) => {
+        console.log(response);
         this.setState({
           data: response.data,
           loading: false,
@@ -31,7 +32,7 @@ class Card extends Component {
     return (this.state.loading ?
       <Col lg={3} md={3} sm={4} xs={6}>
         <h3>{this.props.cityName}</h3>
-        <h3>searching and loading...</h3>
+        <h3>loading...</h3>
       </Col> : <View data={this.state.data} onDel={this.props.onDel} />
     );
   }
@@ -39,6 +40,7 @@ class Card extends Component {
 
 Card.propTypes = {
   cityName: PropTypes.string.isRequired,
+  onDel: PropTypes.func.isRequired,
 };
 
 export default Card;
