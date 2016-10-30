@@ -5,27 +5,27 @@ import List from '../List';
 
 const arr = ['London', 'Kharkiv', 'Kiev'];
 
-const json1 = {
-  activeKey: 0,
-};
-
 function initLC(array) {
   localStorage.setItem('cities', array.join());
-  console.dir(array);
   return array;
 }
 
-function initLCActiveKey() {
-  localStorage.setItem('activeKey', JSON.stringify(json1));
-  return json1;
+function initLCActiveKey(num) {
+  localStorage.setItem('key', num);
+  return num;
 }
 
-let cities = localStorage.getItem('cities') ? localStorage.getItem('cities').split(',') : initLC(arr);
-let activeKey = JSON.parse(localStorage.getItem('activeKey')) || initLCActiveKey();
+const cities = localStorage.getItem('cities') ?
+  localStorage.getItem('cities').split(',') :
+  initLC(arr);
+
+const key = localStorage.getItem('key') ?
+  localStorage.getItem('key') :
+  initLCActiveKey(0);
 
 const App = () => (
   <Grid className="app">
-    <List cities={cities} activeKey={activeKey} />
+    <List cities={cities} activeKey={key} />
   </Grid>
 );
 

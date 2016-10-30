@@ -1,42 +1,46 @@
 import React, { Component } from 'react';
-import { Row, FormGroup, FormControl, Button, Col, Tabs, Tab, Form } from 'react-bootstrap';
+import { Row, FormGroup, FormControl, Button, Tabs, Tab, Form } from 'react-bootstrap';
 import localStorage from 'localStorage';
-import Card from '../../components/Card';
+import Card from '../../containers/Card';
 
 class List extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      cities: this.props.cities,
       newCity: '',
-      activeKey: JSON.parse(localStorage.getItem('activeKey')).activeKey,
+      cities: this.props.cities,
+      activeKey: this.props.activeKey,
     };
-    this.handleSubmit = this.handleSubmit.bind(this);
     this.addCity = this.addCity.bind(this);
-    this.onSelect = this.onSelect.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSelect = this.handleSelect.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
-  onSelect(e) {
-    let selected = e.id.split('-');
-    let json = {
-      activeKey: +selected[selected.length - 1],
-    };
-
-    localStorage.setItem('activeKey', JSON.stringify(json));
+  handleDelete(city) {
+    const cities = this.state.cities;
+    cities.splice(cities.indexOf(city), 1);
+    localStorage.setItem('cities', cities.join());
     this.setState({
-      activeKey: selected[selected.length - 1],
+      cities,
     });
   }
 
-  handleSubmit(e) {
-    e.preventDefault();
-    let cities1 = this.state.cities;
-    cities1.push(this.state.newCity);
-    localStorage.setItem('cities', cities1.join());
+  handleSubmit(event) {
+    event.preventDefault();
+    const cities = this.state.cities;
+    cities.push(this.state.newCity);
+    localStorage.setItem('cities', cities.join());
     this.setState({
-      cities: cities1,
+      cities,
     });
-    this.render();
+  }
+
+  handleSelect(key) {
+    localStorage.setItem('key', key);
+    this.setState({
+      activeKey: key,
+    });
   }
 
   addCity(event) {
@@ -48,32 +52,28 @@ class List extends Component {
   render() {
     return (
       <Row>
-        <Col>
-          <Form onSubmit={this.handleSubmit} inline>
-            <FormGroup validationState={this.state.validationState}>
-              <FormControl
-                type="text"
-                placeholder="City"
-                value={this.state.newCity}
-                onChange={this.addCity}
-              />
-            </FormGroup>
-            <FormGroup>
-              <Button type="submit">
-                Submit
-              </Button>
-            </FormGroup>
-          </Form>
-          <Tabs defaultActiveKey={this.state.activeKey} animation id="tab">
-            {
-              this.state.cities.map((el, key) =>
-                <Tab eventKey={key} key={key} title={el} onEntered={this.onSelect}>
-                  <Card key={key} cityName={el} />
-                </Tab>
-              )
-            }
-          </Tabs>
-        </Col>
+        <Form onSubmit={this.handleSubmit} inline>
+          <FormGroup>
+            <FormControl
+              type="text"
+              placeholder="City"
+              value={this.state.newCity}
+              onChange={this.addCity}
+            />
+            <Button type="submit">
+              Submit
+            </Button>
+          </FormGroup>
+        </Form>
+        <Tabs activeKey={+this.state.activeKey} onSelect={this.handleSelect} id="tab">
+          {
+            this.state.cities.map((el, key) =>
+              <Tab eventKey={key} key={key} title={el}>
+                <Card cityName={el} key={this.key} onDel={this.handleDelete} />
+              </Tab>
+            )
+          }
+        </Tabs>
       </Row>
     );
   }
@@ -81,6 +81,7 @@ class List extends Component {
 
 List.propTypes = {
   cities: React.PropTypes.array.isRequired,
+  activeKey: React.PropTypes.string.isRequired,
 };
 
 export default List;
