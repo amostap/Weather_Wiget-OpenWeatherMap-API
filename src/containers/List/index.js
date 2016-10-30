@@ -33,6 +33,7 @@ class List extends Component {
     localStorage.setItem('cities', cities.join());
     this.setState({
       cities,
+      newCity: '',
     });
   }
 
@@ -56,7 +57,7 @@ class List extends Component {
           <FormGroup>
             <FormControl
               type="text"
-              placeholder="City"
+              placeholder="Add new city"
               value={this.state.newCity}
               onChange={this.addCity}
             />
@@ -69,7 +70,7 @@ class List extends Component {
           {
             this.state.cities.map((el, key) =>
               <Tab eventKey={key} key={key} title={el}>
-                <Card cityName={el} key={this.key} onDel={this.handleDelete} />
+                <Card cityName={el} key={el} onDel={this.handleDelete} />
               </Tab>
             )
           }

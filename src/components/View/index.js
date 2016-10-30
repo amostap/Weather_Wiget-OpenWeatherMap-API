@@ -15,7 +15,7 @@ class View extends Component {
     return (
       <Col lg={3} md={3} sm={4} xs={6}>
         <h3>{this.props.data.name}</h3>
-        <p>Current temp: {this.props.data.main.temp}°C</p>
+        <p>Current temp: {Math.floor(this.props.data.main.temp - 273)}°C</p>
         <p>Humidity: {this.props.data.main.humidity}%</p>
         <p>Pressure: {this.props.data.main.pressure} hpa</p>
         <p>WindSpeed: {this.props.data.wind.speed}m/s</p>
