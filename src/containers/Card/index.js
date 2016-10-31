@@ -30,10 +30,11 @@ class Card extends Component {
 
   render() {
     return (this.state.loading ?
-      <Col lg={3} md={3} sm={4} xs={6}>
-        <h3>{this.props.cityName}</h3>
-        <h3>loading...</h3>
-      </Col> : <View data={this.state.data} onDel={this.props.onDel} />
+      <Col lg={6} md={6} sm={12} xs={12}>
+        <h5>looking outside for you...</h5>
+        <h5>...one sec</h5>
+      </Col> :
+        <View data={this.state.data} onDel={this.props.onDel} />
     );
   }
 }

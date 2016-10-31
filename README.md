@@ -1,3 +1,5 @@
+made in very few time with <3 as test for work:)
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
@@ -6,6 +8,9 @@ You can find the most recent version of this guide [here](https://github.com/fac
 ## Available Scripts
 
 In the project directory, you can run:
+### `npm install`
+
+For install all dependencies.
 
 ### `npm start`
 

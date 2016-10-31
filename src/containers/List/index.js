@@ -73,20 +73,18 @@ class List extends Component {
             </FormGroup>
           </Form>
         </Col>
-        <Col>
-          <Tabs activeKey={+this.state.activeKey} onSelect={this.handleSelect} id="tab">
-            {
-              this.state.cities.map((el, key) =>
-                <Tab
-                  eventKey={key}
-                  key={key} title={<TabTitle elName={el} onDel={this.handleDelete} />}
-                >
-                  <Card cityName={el} key={el} onDel={this.handleDelete} />
-                </Tab>
-              )
-            }
-          </Tabs>
-        </Col>
+        <Tabs activeKey={+this.state.activeKey} onSelect={this.handleSelect} id="tab">
+          {
+            this.state.cities.map((el, key) =>
+              <Tab
+                eventKey={key}
+                key={key} title={<TabTitle elName={el} onDel={this.handleDelete} />}
+              >
+                <Card cityName={el} key={el} onDel={this.handleDelete} />
+              </Tab>
+            )
+          }
+        </Tabs>
       </Row>
     );
   }

@@ -2,17 +2,17 @@ import React, { Component, PropTypes } from 'react';
 import { Col } from 'react-bootstrap';
 
 class View extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.onDel = this.onDel.bind(this);
-  // }
-  // onDel() {
-  //   this.props.onDel(this.props.data.name);
-  // }
+
+  shouldComponentUpdate(newProps) {
+    if (newProps.data === this.props.data) {
+      return false;
+    }
+    return true;
+  }
 
   render() {
     return (
-      <Col lg={4} md={4} sm={4} xs={6}>
+      <Col lg={6} md={6} sm={12} xs={12}>
         <h3>{this.props.data.name} - {this.props.data.weather[0].description}
         </h3>
         <p>Current temp.:<big>
@@ -23,10 +23,11 @@ class View extends Component {
         <p>Humidity: <big><strong>{this.props.data.main.humidity}%</strong></big></p>
         <p>Pressure: <big><strong>{this.props.data.main.pressure} hpa</strong></big></p>
         <p>Wind speed: <big>
-          <strong>{this.props.data.wind.speed}m/s, deg.: {this.props.data.wind.deg}°</strong>
+          <strong>
+            {this.props.data.wind.speed}m/s, deg: {Math.floor(this.props.data.wind.deg)}°
+          </strong>
         </big>
         </p>
-        {/* <Button onClick={this.onDel}>Delete</Button> */}
       </Col>
     );
   }
