@@ -2,6 +2,7 @@ import React from 'react';
 import { Grid } from 'react-bootstrap';
 import localStorage from 'localStorage';
 import List from '../List';
+import Footer from '../../components/Footer';
 
 const arr = ['New York', 'Kiev', 'Kharkiv'];
 
@@ -26,6 +27,7 @@ const key = localStorage.getItem('key') ?
 const App = () => (
   <Grid className="app">
     <List cities={cities} activeKey={key} />
+    <Footer />
   </Grid>
 );
 
