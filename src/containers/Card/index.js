@@ -17,7 +17,6 @@ class Card extends Component {
   componentDidMount() {
     axios.get(`https://crossorigin.me/http://api.openweathermap.org/data/2.5/weather?q=${this.props.cityName}&APPID=${this.state.ID}`)
       .then((response) => {
-        console.log(response);
         this.setState({
           data: response.data,
           loading: false,

@@ -12,6 +12,7 @@ class List extends Component {
       newCity: '',
       cities: this.props.cities,
       activeKey: this.props.activeKey,
+      validationState: '',
     };
     this.addCity = this.addCity.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -36,6 +37,7 @@ class List extends Component {
     this.setState({
       cities,
       newCity: '',
+      validationState: '',
       activeKey: this.state.cities.length - 1,
     });
   }
@@ -51,6 +53,16 @@ class List extends Component {
     this.setState({
       newCity: event.target.value,
     });
+    const length = this.state.newCity.length;
+    if (length > 1) {
+      this.setState({
+        validationState: 'success',
+      });
+    } else {
+      this.setState({
+        validationState: 'error',
+      });
+    }
   }
 
   render() {
@@ -58,7 +70,9 @@ class List extends Component {
       <Row>
         <Col style={{ margin: '20px 0' }}>
           <Form onSubmit={this.handleSubmit} inline>
-            <FormGroup>
+            <FormGroup
+              validationState={this.state.validationState}
+            >
               <InputGroup>
                 <FormControl
                   type="text"
@@ -67,7 +81,10 @@ class List extends Component {
                   onChange={this.addCity}
                 />
                 <InputGroup.Button>
-                  <Button type="submit">Submit</Button>
+                  { this.state.validationState === 'success'
+                    ? <Button type="submit">Submit</Button>
+                    : <Button type="submit" disabled>Submit</Button>
+                  }
                 </InputGroup.Button>
               </InputGroup>
             </FormGroup>
@@ -78,7 +95,8 @@ class List extends Component {
             this.state.cities.map((el, key) =>
               <Tab
                 eventKey={key}
-                key={key} title={<TabTitle elName={el} onDel={this.handleDelete} />}
+                key={key}
+                title={<TabTitle elName={el} onDel={this.handleDelete} />}
               >
                 <Card cityName={el} key={el} onDel={this.handleDelete} />
               </Tab>
